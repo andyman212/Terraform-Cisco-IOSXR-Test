@@ -1,13 +1,11 @@
 variable "hostname" {
-  type        = list(string)
+  type        = string
   description = "Device hostname"
 }
 
-variable "device" {
-  type = object({
-    name = string
-    host = string
-  })
+variable "tls" {
+  type    = bool
+  default = true
 }
 variable "username" {
   type    = string

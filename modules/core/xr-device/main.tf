@@ -6,19 +6,17 @@ terraform {
   }
 }
 
-resource "iosxr_gnmi" "config" {
-  device     = var.device.name
-  path       = "openconfig-system:system/config"
-  attributes = {
-    hostname = var.device.name
-  }
+provider "iosxr" {
+  host     = var.host
+  username = var.username
+  password = var.password
+  tls      = var.tls
 }
 
 module "xr_base_config" {
   source = "../xr_base"
   
-  hostname = var.device.name
-
+  hostname = var.hostname
 }
 
 module "xr_interfaces" {
