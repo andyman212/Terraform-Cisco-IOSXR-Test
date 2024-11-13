@@ -1,5 +1,5 @@
 module "lab-eve-xrv9kv-04" {
-  source = "../../modules/core/xr-device"
+  source = "../../../modules/core/xr-device"
 
   tls          = true
   host         = "192.168.50.234"

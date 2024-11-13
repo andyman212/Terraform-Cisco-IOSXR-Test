@@ -1,5 +1,5 @@
 module "lab-eve-xrv9kv-01" {
-  source = "../../modules/core/xr-device"
+  source = "../../../modules/core/xr-device"
 
  
   tls          = true

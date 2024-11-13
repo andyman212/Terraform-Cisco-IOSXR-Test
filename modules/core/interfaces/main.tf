@@ -12,6 +12,6 @@ resource "iosxr_interface" "interface" {
   interface_name = each.key
   description    = each.value.description
   ipv4_address   = each.value.ipv4_address
-  ipv4_netmask      = each.value.ipv4_mask
+  ipv4_netmask   = each.value.ipv4_mask
   shutdown       = !each.value.enabled
 }
