@@ -18,6 +18,11 @@ variable "router_id" {
   type        = string
 }
 
+variable "segment_routing_interface" {
+  description = "ISIS segment routing interface"
+  type        = string
+}
+
 variable "interfaces" {
   description = "ISIS interfaces"
   type        = map(object({
@@ -25,4 +30,9 @@ variable "interfaces" {
     circuit_type   = string
     p2p            = bool
   }))
+}
+
+variable "segment_routing_sid_index" {
+  description = "ISIS segment routing SID index"
+  type        = string
 }

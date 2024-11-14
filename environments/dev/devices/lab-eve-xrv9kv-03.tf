@@ -30,22 +30,24 @@ module "lab-eve-xrv9kv-03" {
 
   isis = {
     process_id = "CORE"
-    is_type    = "level-1"
+    is_type    = "level-2-only"
+    segment_routing_interface = "Loopback0"
+    segment_routing_sid_index = "103"
     net_id     = "49.0001.2222.2222.0003.00"
     interfaces = {
       "GigabitEthernet0/0/0/0" = {
         interface_name = "GigabitEthernet0/0/0/0"
-        circuit_type   = "level-1"
+        circuit_type   = "level-2-only"
         p2p           = true
       },
       "GigabitEthernet0/0/0/1" = {
         interface_name = "GigabitEthernet0/0/0/1"
-        circuit_type   = "level-1"
+        circuit_type   = "level-2-only"
         p2p           = true
       },
       "Loopback0" = {
         interface_name = "Loopback0"
-        circuit_type   = "level-1"
+        circuit_type   = "level-2-only"
         p2p           = true
       }
     }

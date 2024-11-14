@@ -39,6 +39,8 @@ variable "isis" {
     process_id = string
     is_type    = string
     net_id     = string
+    segment_routing_interface = string
+    segment_routing_sid_index = string
     interfaces = map(object({
       interface_name = string
       circuit_type   = string

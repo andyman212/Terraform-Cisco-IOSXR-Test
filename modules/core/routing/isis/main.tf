@@ -9,16 +9,6 @@ terraform {
 resource "iosxr_router_isis" "example" {
   process_id                                                            = var.process_id
   is_type                                                               = var.is_type
-  set_overload_bit_levels = [
-    {
-      level_id                                             = 1
-      on_startup_advertise_as_overloaded                   = true
-      on_startup_advertise_as_overloaded_time_to_advertise = 10
-      on_startup_wait_for_bgp                              = false
-      advertise_external                                   = true
-      advertise_interlevel                                 = true
-    }
-  ]
   log_adjacency_changes             = true
   nets = [
     {
@@ -42,14 +32,14 @@ resource "iosxr_router_isis_address_family" "example" {
   process_id              = var.process_id
   af_name                 = "ipv4"
   saf_name                = "unicast"
-  mpls_ldp_auto_config    = true
+  mpls_ldp_auto_config    = false
   metric_style_narrow     = false
   metric_style_wide       = true
   metric_style_transition = false
   microloop_avoidance_segment_routing = true
   metric_style_levels = [
     {
-      level_id   = 1
+      level_id   = 2
       narrow     = false
       wide       = true
       transition = false
@@ -69,14 +59,22 @@ resource "iosxr_router_isis_interface_address_family" "example" {
   fast_reroute_per_prefix_ti_lfa = can(regex("^Loopback", each.value.interface_name)) ? false : true
   fast_reroute_per_prefix_levels = can(regex("^Loopback", each.value.interface_name)) ? [] : [
     {
-      level_id = 1
+      level_id = 2
       ti_lfa   = true
     }
   ]
 }
-resource "iosxr_segment_routing" "example" {
-  global_block_lower_bound = 16000
-  global_block_upper_bound = 29999
-  local_block_lower_bound  = 15000
-  local_block_upper_bound  = 15999
+
+resource "iosxr_gnmi" "segment_routing" {
+  path = "Cisco-IOS-XR-um-router-isis-cfg:/router/isis/processes/process[process-id=${var.process_id}]/address-families/address-family[af-name=ipv4][saf-name=unicast]/segment-routing/mpls"
+  attributes = {
+    sr-prefer = true
+  }
+}
+
+resource "iosxr_gnmi" "segment_routing_interface" {
+  path = "Cisco-IOS-XR-um-router-isis-cfg:/router/isis/processes/process[process-id=${var.process_id}]/interfaces/interface[interface-name=${var.segment_routing_interface}]/address-families/address-family[af-name=ipv4][saf-name=unicast]/prefix-sid/sid/index/"
+  attributes = {
+    sid-index = var.segment_routing_sid_index
+  }
 }

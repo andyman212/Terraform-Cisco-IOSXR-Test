@@ -29,6 +29,8 @@ module "xr_routing_isis" {
   source = "../routing/isis"
   
   process_id = var.isis.process_id
+  segment_routing_interface = var.isis.segment_routing_interface
+  segment_routing_sid_index = var.isis.segment_routing_sid_index
   is_type    = var.isis.is_type
   net_id     = var.isis.net_id
   router_id  = var.router_id
